@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tables Logistics Centre Crystal bud</title>
+</head>
+<body>
+<h1>Список таблиц</h1>
+<table>
+    <thead>
+   <tr>
+       <th>#</th>
+       <th>Таблица</th>
+   </tr>
+    </thead>
+    <tbody>
+    <tr data-th-each="table : ${tables}">
+        <td data-th-text="${table.id}"></td>
+        <td>
+            <a data-th-href="@{/catalogue/tables/{tableId}(tableId=${table.id})}"
+            data-th-text="${table.title}"></a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
