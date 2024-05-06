@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>[[${table.title}]] Crystal bud</title>
+</head>
+<body>
+<a data-th-href="@{/catalogue/tables/list}">&larr; К списку таблиц</a>
+<h1 data-th-text="${table.title}"></h1>
+<ul>
+    <li><strong>ID</strong>: <span data-th-text="${table.id}"></span> </li>
+    <li><strong>Название</strong>: <span data-th-text="${table.title}"></span> </li>
+    <li><strong>Описание</strong>: <span data-th-text="${table.details}"></span> </li>
+</ul>
+</body>
+</html>

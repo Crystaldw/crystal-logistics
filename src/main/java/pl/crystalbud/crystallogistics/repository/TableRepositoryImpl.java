@@ -3,10 +3,7 @@ package pl.crystalbud.crystallogistics.repository;
 import org.springframework.stereotype.Repository;
 import pl.crystalbud.crystallogistics.entity.Table;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 import java.util.stream.IntStream;
 
 @Repository
@@ -27,5 +24,12 @@ public class TableRepositoryImpl implements TableRepository {
                 .orElse(0)+1);
         this.tables.add(table);
         return table;
+    }
+
+    @Override
+    public Optional<Table> findById(Integer tableId) {
+        return this.tables.stream()
+                .filter(table -> Objects.equals(tableId, table.getId()))
+                .findFirst();
     }
 }

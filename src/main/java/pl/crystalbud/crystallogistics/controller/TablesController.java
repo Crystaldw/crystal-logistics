@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import pl.crystalbud.crystallogistics.dto.TableDTO;
@@ -31,6 +32,14 @@ public class TablesController {
     @PostMapping("create")
     public String createTable(TableDTO tableDTO){
         Table table = this.tablesService.createTable(tableDTO.title(), tableDTO.details());
-        return "redirect:/catalogue/tables/list";
+        return "redirect:/catalogue/tables/%d".formatted(table.getId());
     }
+
+    @GetMapping("{tableId:\\d+}")
+    public String getTable(@PathVariable("tableId") int tableId, Model model){
+    model.addAttribute("table", this.tablesService.findTable(tableId).orElseThrow());
+    return "catalogue/tables/table";
+    }
+
+
 }
