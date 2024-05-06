@@ -14,12 +14,6 @@ public class TableRepositoryImpl implements TableRepository {
 
     private final List<Table> tables = new ArrayList<>();
 
-    public TableRepositoryImpl() {
-        IntStream.range(1,4)
-                .forEach(i-> this.tables.add(new Table(i, "Таблица №%d" .formatted(i),
-                        "Описание таблицы №%d" .formatted(i))));
-    }
-
     @Override
     public List<Table> findAll() {
         return Collections.unmodifiableList(this.tables);
