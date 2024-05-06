@@ -16,5 +16,10 @@ public class TablesServiceImpl implements TablesService {
     public List<Table> findAllTables() {
         return this.tableRepository.findAll();
     }
+
+    @Override
+    public Table createTable(String title, String details) {
+        return this.tableRepository.save(new Table(null, title, details));
+    }
 }
 

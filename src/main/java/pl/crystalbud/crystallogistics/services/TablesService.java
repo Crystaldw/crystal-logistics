@@ -9,4 +9,6 @@ public interface TablesService {
 
 
     List<Table> findAllTables();
+
+    Table createTable(String title, String details);
 }

@@ -5,6 +5,7 @@ import pl.crystalbud.crystallogistics.entity.Table;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.IntStream;
 
@@ -22,5 +23,15 @@ public class TableRepositoryImpl implements TableRepository {
     @Override
     public List<Table> findAll() {
         return Collections.unmodifiableList(this.tables);
+    }
+
+    @Override
+    public Table save(Table table) {
+        table.setId(this.tables.stream()
+                .max(Comparator.comparingInt(Table::getId))
+                .map(Table::getId)
+                .orElse(0)+1);
+        this.tables.add(table);
+        return table;
     }
 }
