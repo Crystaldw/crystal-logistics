@@ -2,6 +2,7 @@ package pl.crystalbud.crystallogistics.controller;
 
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,6 +11,7 @@ import pl.crystalbud.crystallogistics.dto.UpdateTableDTO;
 import pl.crystalbud.crystallogistics.entity.Table;
 import pl.crystalbud.crystallogistics.services.TablesService;
 
+import java.util.Locale;
 import java.util.NoSuchElementException;
 
 @Controller
@@ -18,9 +20,11 @@ import java.util.NoSuchElementException;
 public class TableController {
 
     private final TablesService tablesService;
+    private final MessageSource messageSource;
     @ModelAttribute("table")
     public Table table(@PathVariable("tableId") int tableId){
-        return this.tablesService.findTable(tableId).orElseThrow(()-> new NoSuchElementException("Таблица не найдена"));
+        return this.tablesService.findTable(tableId)
+                .orElseThrow(()-> new NoSuchElementException("catalogue.errors.table.not_found"));
     }
 
     @GetMapping
@@ -47,9 +51,11 @@ public class TableController {
 
     @ExceptionHandler(NoSuchElementException.class)
     public String handleNoSuchElementException(NoSuchElementException exception, Model model,
-                                               HttpServletResponse response){
+                                               HttpServletResponse response, Locale locale){
         response.setStatus(HttpStatus.NOT_FOUND.value());
-        model.addAttribute("error", exception.getMessage());
+        model.addAttribute("error",
+                this.messageSource.getMessage(exception.getMessage(), new Object[0],
+                        exception.getMessage(), locale));
     return "errors/404";
     }
 }
