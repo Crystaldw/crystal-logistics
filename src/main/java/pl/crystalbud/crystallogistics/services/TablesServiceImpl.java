@@ -6,6 +6,7 @@ import pl.crystalbud.crystallogistics.entity.Table;
 import pl.crystalbud.crystallogistics.repository.TableRepository;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -26,6 +27,22 @@ public class TablesServiceImpl implements TablesService {
     @Override
     public Optional<Table> findTable(int tableId) {
         return this.tableRepository.findById(tableId);
+    }
+
+    @Override
+    public void updateTable(Integer id, String title, String details) {
+        this.tableRepository.findById(id)
+                .ifPresentOrElse(table -> {
+                    table.setTitle(title);
+                    table.setDetails(details);
+                }, ()->{
+                    throw new NoSuchElementException();
+                });
+    }
+
+    @Override
+    public void deleteTable(Integer id) {
+        this.tableRepository.deleteById(id);
     }
 }
 

@@ -14,4 +14,8 @@ public interface TablesService {
     Table createTable(String title, String details);
 
     Optional<Table> findTable(int tableId);
+
+    void updateTable(Integer id, String title, String details);
+
+    void deleteTable(Integer id);
 }

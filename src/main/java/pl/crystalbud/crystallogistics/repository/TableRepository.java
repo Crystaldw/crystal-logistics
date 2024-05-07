@@ -11,4 +11,6 @@ public interface TableRepository {
     Table save(Table table);
 
     Optional<Table> findById(Integer tableId);
+
+    void deleteById(Integer id);
 }

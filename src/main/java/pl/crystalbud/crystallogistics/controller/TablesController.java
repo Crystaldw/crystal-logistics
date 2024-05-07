@@ -3,10 +3,7 @@ package pl.crystalbud.crystallogistics.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import pl.crystalbud.crystallogistics.dto.TableDTO;
 import pl.crystalbud.crystallogistics.entity.Table;
 import pl.crystalbud.crystallogistics.services.TablesService;
@@ -17,6 +14,7 @@ import pl.crystalbud.crystallogistics.services.TablesService;
 public class TablesController {
 
     private final TablesService tablesService;
+
 
     @GetMapping("list")
     public String getTablesList(Model model) {
@@ -34,12 +32,5 @@ public class TablesController {
         Table table = this.tablesService.createTable(tableDTO.title(), tableDTO.details());
         return "redirect:/catalogue/tables/%d".formatted(table.getId());
     }
-
-    @GetMapping("{tableId:\\d+}")
-    public String getTable(@PathVariable("tableId") int tableId, Model model){
-    model.addAttribute("table", this.tablesService.findTable(tableId).orElseThrow());
-    return "catalogue/tables/table";
-    }
-
 
 }

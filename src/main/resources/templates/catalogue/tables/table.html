@@ -12,5 +12,9 @@
     <li><strong>Название</strong>: <span data-th-text="${table.title}"></span> </li>
     <li><strong>Описание</strong>: <span data-th-text="${table.details}"></span> </li>
 </ul>
+<a data-th-href="@{/catalogue/tables/{tableId}/edit(tableId=${table.id})}">Изменить</a>
+<form method="post" data-th-action="@{/catalogue/tables/{tableId}/delete(tableId=${table.id})}">
+    <button type="submit">Удалить</button>
+</form>
 </body>
 </html>

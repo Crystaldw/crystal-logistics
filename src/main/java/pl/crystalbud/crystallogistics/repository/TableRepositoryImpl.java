@@ -32,4 +32,9 @@ public class TableRepositoryImpl implements TableRepository {
                 .filter(table -> Objects.equals(tableId, table.getId()))
                 .findFirst();
     }
+
+    @Override
+    public void deleteById(Integer id) {
+        this.tables.removeIf(table -> Objects.equals(id, table.getId()));
+    }
 }
