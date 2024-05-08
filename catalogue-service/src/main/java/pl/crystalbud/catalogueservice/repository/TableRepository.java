@@ -1,6 +1,6 @@
-package pl.crystalbud.crystallogistics.repository;
+package pl.crystalbud.catalogueservice.repository;
 
-import pl.crystalbud.crystallogistics.entity.Table;
+import pl.crystalbud.catalogueservice.entity.Table;
 
 import java.util.List;
 import java.util.Optional;

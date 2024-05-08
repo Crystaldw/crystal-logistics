@@ -1,7 +1,7 @@
-package pl.crystalbud.crystallogistics.services;
+package pl.crystalbud.catalogueservice.services;
 
 
-import pl.crystalbud.crystallogistics.entity.Table;
+import pl.crystalbud.catalogueservice.entity.Table;
 
 import java.util.List;
 import java.util.Optional;

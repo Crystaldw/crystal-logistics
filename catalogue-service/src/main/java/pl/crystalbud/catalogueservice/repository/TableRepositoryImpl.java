@@ -1,10 +1,9 @@
-package pl.crystalbud.crystallogistics.repository;
+package pl.crystalbud.catalogueservice.repository;
 
 import org.springframework.stereotype.Repository;
 import pl.crystalbud.crystallogistics.entity.Table;
 
 import java.util.*;
-import java.util.stream.IntStream;
 
 @Repository
 public class TableRepositoryImpl implements TableRepository {

@@ -1,9 +1,9 @@
-package pl.crystalbud.crystallogistics.services;
+package pl.crystalbud.catalogueservice.services;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import pl.crystalbud.crystallogistics.entity.Table;
-import pl.crystalbud.crystallogistics.repository.TableRepository;
+import pl.crystalbud.catalogueservice.entity.Table;
+import pl.crystalbud.catalogueservice.repository.TableRepository;
 
 import java.util.List;
 import java.util.NoSuchElementException;
