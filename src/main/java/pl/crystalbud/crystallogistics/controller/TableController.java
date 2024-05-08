@@ -42,7 +42,7 @@ public class TableController {
     }
 
     @PostMapping("edit")
-    public String updateTable(@ModelAttribute("table") Table table, @Valid UpdateTableDTO tableDTO,
+    public String updateTable(@ModelAttribute(name = "table", binding = false) Table table, @Valid UpdateTableDTO tableDTO,
                               BindingResult bindingResult,
                               Model model) {
         if (bindingResult.hasErrors()) {
