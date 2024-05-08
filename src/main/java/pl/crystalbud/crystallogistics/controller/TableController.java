@@ -10,7 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
-import pl.crystalbud.crystallogistics.dto.UpdateTableDTO;
+import pl.crystalbud.crystallogistics.controller.payload.payload.UpdateTablePayload;
 import pl.crystalbud.crystallogistics.entity.Table;
 import pl.crystalbud.crystallogistics.services.TablesService;
 
@@ -42,7 +42,7 @@ public class TableController {
     }
 
     @PostMapping("edit")
-    public String updateTable(@ModelAttribute(name = "table", binding = false) Table table, @Valid UpdateTableDTO tableDTO,
+    public String updateTable(@ModelAttribute(name = "table", binding = false) Table table, @Valid UpdateTablePayload tableDTO,
                               BindingResult bindingResult,
                               Model model) {
         if (bindingResult.hasErrors()) {

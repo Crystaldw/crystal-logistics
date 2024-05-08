@@ -1,9 +1,9 @@
-package pl.crystalbud.crystallogistics.dto;
+package pl.crystalbud.crystallogistics.controller.payload.payload;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
-public record NewTableDTO(
+public record NewTablePayload(
         @NotNull(message = "{catalogue.tables.create.errors.title_is_null}")
         @Size(min = 3, max = 50, message = "{catalogue.tables.create.errors.title_size_is_invalid}")
         String title,

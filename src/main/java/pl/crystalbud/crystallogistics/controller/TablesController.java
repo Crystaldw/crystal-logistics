@@ -7,7 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
-import pl.crystalbud.crystallogistics.dto.NewTableDTO;
+import pl.crystalbud.crystallogistics.controller.payload.payload.NewTablePayload;
 import pl.crystalbud.crystallogistics.entity.Table;
 import pl.crystalbud.crystallogistics.services.TablesService;
 
@@ -31,7 +31,7 @@ public class TablesController {
     }
 
     @PostMapping("create")
-    public String createTable(@Valid NewTableDTO tableDTO,
+    public String createTable(@Valid NewTablePayload tableDTO,
                               BindingResult bindingResult,
                               Model model) {
         if (bindingResult.hasErrors()) {
