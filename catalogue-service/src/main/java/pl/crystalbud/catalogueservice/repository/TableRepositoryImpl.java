@@ -1,7 +1,7 @@
 package pl.crystalbud.catalogueservice.repository;
 
 import org.springframework.stereotype.Repository;
-import pl.crystalbud.crystallogistics.entity.Table;
+import pl.crystalbud.catalogueservice.entity.Table;
 
 import java.util.*;
 
