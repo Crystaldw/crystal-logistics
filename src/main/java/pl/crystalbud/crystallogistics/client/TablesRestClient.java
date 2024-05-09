@@ -5,7 +5,7 @@ import pl.crystalbud.crystallogistics.entity.Table;
 import java.util.List;
 import java.util.Optional;
 
-public interface n TablesRestClient {
+public interface TablesRestClient {
 
     List<Table> findAllTables();
 

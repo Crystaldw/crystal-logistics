@@ -7,21 +7,21 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
+import pl.crystalbud.crystallogistics.client.TablesRestClient;
 import pl.crystalbud.crystallogistics.controller.payload.payload.NewTablePayload;
 import pl.crystalbud.crystallogistics.entity.Table;
-import pl.crystalbud.crystallogistics.services.TablesService;
 
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/catalogue/tables")
 public class TablesController {
 
-    private final TablesService tablesService;
+    private final TablesRestClient tablesRestClient;
 
 
     @GetMapping("list")
     public String getTablesList(Model model) {
-        model.addAttribute("tables", this.tablesService.findAllTables());
+        model.addAttribute("tables", this.tablesRestClient.findAllTables());
         return "catalogue/tables/list";
     }
 
@@ -41,8 +41,8 @@ public class TablesController {
                     .toList());
             return "catalogue/tables/new_table";
         } else {
-            Table table = this.tablesService.createTable(tableDTO.title(), tableDTO.details());
-            return "redirect:/catalogue/tables/%d".formatted(table.getId());
+            Table table = this.tablesRestClient.createTable(tableDTO.title(), tableDTO.details());
+            return "redirect:/catalogue/tables/%d".formatted(table.id());
         }
     }
 }

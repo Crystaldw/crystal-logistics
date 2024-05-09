@@ -12,7 +12,7 @@ import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 import pl.crystalbud.crystallogistics.controller.payload.payload.UpdateTablePayload;
 import pl.crystalbud.crystallogistics.entity.Table;
-import pl.crystalbud.crystallogistics.services.TablesService;
+import pl.crystalbud.crystallogistics.client.TablesRestClient;
 
 import java.util.Locale;
 import java.util.NoSuchElementException;
@@ -22,12 +22,12 @@ import java.util.NoSuchElementException;
 @RequestMapping(("catalogue/tables/{tableId:\\d+}"))
 public class TableController {
 
-    private final TablesService tablesService;
+    private final TablesRestClient tablesRestClient;
     private final MessageSource messageSource;
 
     @ModelAttribute("table")
     public Table table(@PathVariable("tableId") int tableId) {
-        return this.tablesService.findTable(tableId)
+        return this.tablesRestClient.findTable(tableId)
                 .orElseThrow(() -> new NoSuchElementException("catalogue.errors.table.not_found"));
     }
 
@@ -52,14 +52,14 @@ public class TableController {
                     .toList());
             return "catalogue/tables/edit";
         } else {
-            this.tablesService.updateTable(table.getId(), tableDTO.title(), tableDTO.details());
-            return "redirect:/catalogue/tables/%d".formatted(table.getId());
+            this.tablesRestClient.updateTable(table.id(), tableDTO.title(), tableDTO.details());
+            return "redirect:/catalogue/tables/%d".formatted(table.id());
         }
     }
 
     @PostMapping("delete")
     public String deleteTable(@ModelAttribute("table") Table table) {
-        this.tablesService.deleteTable(table.getId());
+        this.tablesRestClient.deleteTable(table.id());
         return "redirect:/catalogue/tables/list";
     }
 
