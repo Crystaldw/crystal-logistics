@@ -52,10 +52,11 @@ public class RestClientTablesRestClient implements TablesRestClient {
     @Override
     public Optional<Table> findTable(int tableId) {
         try {
-            return Optional.ofNullable(this.restClient.get()
+            return Optional.ofNullable(this.restClient
+                    .get()
                     .uri("/catalogue-api/tables{tableId}", tableId)
                     .retrieve()
-                    .body(Table.class);
+                    .body(Table.class));
         } catch (HttpClientErrorException.NotFound exception) {
             return Optional.empty();
         }
