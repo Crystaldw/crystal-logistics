@@ -6,6 +6,7 @@ import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
@@ -23,12 +24,11 @@ import java.util.NoSuchElementException;
 public class TableRestController {
 
     private final TablesService tablesService;
-    private final MessageSource messageSource;
 
     @ModelAttribute("table")
     public Table getTable(@PathVariable("tableId") int tableId) {
         return this.tablesService.findTable(tableId)
-                .orElseThrow(() -> new NoSuchElementException("catalogue.errors.table.not_found"))
+                .orElseThrow(() -> new NoSuchElementException("catalogue.errors.table.not_found"));
     }
 
     @GetMapping
@@ -39,18 +39,14 @@ public class TableRestController {
     @PatchMapping
     public ResponseEntity<?> updateTable(@PathVariable("tableId") int tableId,
                                          @Valid @RequestBody UpdateTablePayload payload,
-                                         BindingResult bindingResult, Locale locale) {
+                                         BindingResult bindingResult, Locale locale)
+            throws BindException {
         if (bindingResult.hasErrors()) {
-            ProblemDetail problemDetail = ProblemDetail
-                    .forStatusAndDetail(HttpStatus.BAD_REQUEST,
-                            this.messageSource.getMessage("errors.400.title", new Object[0],
-                                    "errors.400.title", locale));
-            problemDetail.setProperty("errors",
-                    bindingResult.getAllErrors().stream()
-                            .map(ObjectError::getDefaultMessage)
-                            .toList());
-            return ResponseEntity.badRequest()
-                    .body(problemDetail);
+            if(bindingResult instanceof BindException exception){
+                throw exception;
+            }else {
+                throw new BindException(bindingResult);
+            }
         } else {
             this.tablesService.updateTable(tableId, payload.title(), payload.details());
             return ResponseEntity.noContent()
