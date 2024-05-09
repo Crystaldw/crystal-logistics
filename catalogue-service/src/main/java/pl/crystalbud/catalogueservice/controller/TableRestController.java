@@ -3,6 +3,7 @@ package pl.crystalbud.catalogueservice.controller;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.MessageSource;
+import org.springframework.context.MessageSourceAware;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +25,7 @@ import java.util.NoSuchElementException;
 public class TableRestController {
 
     private final TablesService tablesService;
+    private final MessageSource messageSource;
 
     @ModelAttribute("table")
     public Table getTable(@PathVariable("tableId") int tableId) {
@@ -42,9 +44,9 @@ public class TableRestController {
                                          BindingResult bindingResult, Locale locale)
             throws BindException {
         if (bindingResult.hasErrors()) {
-            if(bindingResult instanceof BindException exception){
+            if (bindingResult instanceof BindException exception) {
                 throw exception;
-            }else {
+            } else {
                 throw new BindException(bindingResult);
             }
         } else {
@@ -52,5 +54,21 @@ public class TableRestController {
             return ResponseEntity.noContent()
                     .build();
         }
+    }
+
+    @DeleteMapping
+    public ResponseEntity<Void> deleteTable(@PathVariable("tableId") int tableId) {
+        this.tablesService.deleteTable(tableId);
+        return ResponseEntity.noContent()
+                .build();
+    }
+
+    @ExceptionHandler(NoSuchElementException.class)
+    public ResponseEntity<ProblemDetail> handleNoSuchElementException(NoSuchElementException exception,
+                                                                      Locale locale) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(ProblemDetail.forStatusAndDetail(HttpStatus.NOT_FOUND,
+                this.messageSource.getMessage(exception.getMessage(), new Object[0],
+                        exception.getMessage(), locale)));
     }
 }
