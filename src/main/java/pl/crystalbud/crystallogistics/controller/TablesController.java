@@ -1,12 +1,12 @@
 package pl.crystalbud.crystallogistics.controller;
 
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
+import pl.crystalbud.crystallogistics.client.BadRequestException;
 import pl.crystalbud.crystallogistics.client.TablesRestClient;
 import pl.crystalbud.crystallogistics.controller.payload.payload.NewTablePayload;
 import pl.crystalbud.crystallogistics.entity.Table;
@@ -31,18 +31,15 @@ public class TablesController {
     }
 
     @PostMapping("create")
-    public String createTable(@Valid NewTablePayload tableDTO,
-                              BindingResult bindingResult,
+    public String createTable(NewTablePayload payload,
                               Model model) {
-        if (bindingResult.hasErrors()) {
-            model.addAttribute("tableDTO", tableDTO);
-            model.addAttribute("errors", bindingResult.getAllErrors().stream()
-                    .map(ObjectError::getDefaultMessage)
-                    .toList());
-            return "catalogue/tables/new_table";
-        } else {
-            Table table = this.tablesRestClient.createTable(tableDTO.title(), tableDTO.details());
+        try {
+            Table table = this.tablesRestClient.createTable(payload.title(), payload.details());
             return "redirect:/catalogue/tables/%d".formatted(table.id());
+        } catch (BadRequestException exception) {
+            model.addAttribute("payload", payload);
+            model.addAttribute("errors", exception.getErrors());
+            return "catalogue/tables/new_table";
         }
     }
 }

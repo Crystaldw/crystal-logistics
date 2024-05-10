@@ -1,0 +1,4 @@
+crystal_logistics:
+  services:
+    catalogue:
+      uri: http://localhost:8081

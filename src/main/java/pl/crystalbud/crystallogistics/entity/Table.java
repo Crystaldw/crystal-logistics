@@ -1,4 +1,4 @@
 package pl.crystalbud.crystallogistics.entity;
 
-public record Table(int id, String titles, String details) {
+public record Table(int id, String title, String details) {
 }

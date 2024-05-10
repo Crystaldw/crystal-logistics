@@ -54,7 +54,7 @@ public class RestClientTablesRestClient implements TablesRestClient {
         try {
             return Optional.ofNullable(this.restClient
                     .get()
-                    .uri("/catalogue-api/tables{tableId}", tableId)
+                    .uri("/catalogue-api/tables/{tableId}", tableId)
                     .retrieve()
                     .body(Table.class));
         } catch (HttpClientErrorException.NotFound exception) {
@@ -83,7 +83,7 @@ public class RestClientTablesRestClient implements TablesRestClient {
         try {
             this.restClient
                     .delete()
-                    .uri("/catalogue-api/tables{tableId}", tableId)
+                    .uri("/catalogue-api/tables/{tableId}", tableId)
                     .retrieve()
                     .toBodilessEntity();
         } catch (HttpClientErrorException.NotFound exception) {
