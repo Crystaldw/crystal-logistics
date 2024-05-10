@@ -1,16 +1,10 @@
 package pl.crystalbud.catalogueservice.repository;
 
+import org.springframework.data.repository.CrudRepository;
 import pl.crystalbud.catalogueservice.entity.Table;
 
-import java.util.List;
-import java.util.Optional;
 
-public interface TableRepository {
-    List<Table> findAll();
+public interface TableRepository extends CrudRepository<Table, Integer> {
 
-    Table save(Table table);
-
-    Optional<Table> findById(Integer tableId);
-
-    void deleteById(Integer id);
+    Iterable<Table>findAllByTitleLikeIgnoreCase(String filter);
 }

@@ -2,6 +2,7 @@ package pl.crystalbud.catalogueservice.services;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import pl.crystalbud.catalogueservice.entity.Table;
 import pl.crystalbud.catalogueservice.repository.TableRepository;
 
@@ -14,12 +15,18 @@ import java.util.Optional;
 public class TablesServiceImpl implements TablesService {
 
     private final TableRepository tableRepository;
+
     @Override
-    public List<Table> findAllTables() {
-        return this.tableRepository.findAll();
+    public Iterable<Table> findAllTables(String filter) {
+        if (filter != null && !filter.isBlank()) {
+            return this.tableRepository.findAllByTitleLikeIgnoreCase(filter);
+        } else {
+            return this.tableRepository.findAll();
+        }
     }
 
     @Override
+    @Transactional
     public Table createTable(String title, String details) {
         return this.tableRepository.save(new Table(null, title, details));
     }
@@ -30,17 +37,19 @@ public class TablesServiceImpl implements TablesService {
     }
 
     @Override
+    @Transactional
     public void updateTable(Integer id, String title, String details) {
         this.tableRepository.findById(id)
                 .ifPresentOrElse(table -> {
                     table.setTitle(title);
                     table.setDetails(details);
-                }, ()->{
+                }, () -> {
                     throw new NoSuchElementException();
                 });
     }
 
     @Override
+    @Transactional
     public void deleteTable(Integer id) {
         this.tableRepository.deleteById(id);
     }

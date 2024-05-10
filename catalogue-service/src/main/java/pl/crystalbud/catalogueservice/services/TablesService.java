@@ -9,7 +9,7 @@ import java.util.Optional;
 public interface TablesService {
 
 
-    List<Table> findAllTables();
+    Iterable<Table> findAllTables(String filter);
 
     Table createTable(String title, String details);
 

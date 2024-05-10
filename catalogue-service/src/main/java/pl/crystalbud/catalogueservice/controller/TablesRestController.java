@@ -29,8 +29,8 @@ public class TablesRestController {
     private final TablesService tablesService;
 
     @GetMapping
-    public List<Table> findTables() {
-        return this.tablesService.findAllTables();
+    public Iterable<Table> findTables(@RequestParam(name = "filter", required = false)String filter) {
+        return this.tablesService.findAllTables(filter);
     }
 
     @PostMapping
