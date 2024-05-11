@@ -8,6 +8,6 @@ import pl.crystalbud.catalogueservice.entity.Table;
 
 public interface TableRepository extends CrudRepository<Table, Integer> {
 
-    @Query(value = "select p from Table p where p.title ilike :filter")
+    @Query(value = "select * from catalogue.t_table where c_title ilike :filter", nativeQuery = true)
     Iterable<Table>findAllByTitleLikeIgnoreCase(@Param("filter") String filter);
 }
