@@ -12,6 +12,12 @@ import lombok.NonNull;
 @NoArgsConstructor
 @Entity
 @jakarta.persistence.Table(schema = "catalogue", name = "t_table")
+@NamedQueries(
+        @NamedQuery(
+                name = "Table.findAllByTitleLikeIgnoringCase",
+                query = "select t from Table t where t.title ilike :filter"
+        )
+)
 public class Table {
 
     @Id
