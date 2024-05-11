@@ -7,7 +7,7 @@ import java.util.Optional;
 
 public interface TablesRestClient {
 
-    List<Table> findAllTables();
+    List<Table> findAllTables(String filter);
 
     Table createTable(String title, String details);
 

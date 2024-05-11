@@ -25,10 +25,10 @@ public class RestClientTablesRestClient implements TablesRestClient {
     private final RestClient restClient;
 
     @Override
-    public List<Table> findAllTables() {
+    public List<Table> findAllTables(String filter) {
         return this.restClient
                 .get()
-                .uri("/catalogue-api/tables")
+                .uri("/catalogue-api/tables?filter={filter}", filter)
                 .retrieve()
                 .body(TABLES_TYPE_REFERENCE);
     }

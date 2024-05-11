@@ -7,6 +7,11 @@
 <body>
 <a data-th-href="@{/catalogue/tables/create}">+ Создать таблицу</a>
 <h1>Список таблиц</h1>
+<form method="get" data-th-action="@{/catalogue/tables/list}">
+    <label>Фильтр:<input type="text" name="filter" data-th-value="${filter}">
+    <button type="submit">Поиск</button>
+    </label>
+</form>
 <table>
     <thead>
    <tr>

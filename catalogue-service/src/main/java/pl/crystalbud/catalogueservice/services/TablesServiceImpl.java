@@ -19,7 +19,7 @@ public class TablesServiceImpl implements TablesService {
     @Override
     public Iterable<Table> findAllTables(String filter) {
         if (filter != null && !filter.isBlank()) {
-            return this.tableRepository.findAllByTitleLikeIgnoreCase(filter);
+            return this.tableRepository.findAllByTitleLikeIgnoreCase("%" + filter + "%");
         } else {
             return this.tableRepository.findAll();
         }

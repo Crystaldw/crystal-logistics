@@ -20,8 +20,9 @@ public class TablesController {
 
 
     @GetMapping("list")
-    public String getTablesList(Model model) {
-        model.addAttribute("tables", this.tablesRestClient.findAllTables());
+    public String getTablesList(Model model, @RequestParam(name = "filter", required = false)String filter) {
+        model.addAttribute("tables", this.tablesRestClient.findAllTables(filter));
+        model.addAttribute("filter", filter);
         return "catalogue/tables/list";
     }
 
