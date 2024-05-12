@@ -1,6 +1,7 @@
 package pl.crystalbud.crystallogistics.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -11,6 +12,8 @@ import pl.crystalbud.crystallogistics.client.TablesRestClient;
 import pl.crystalbud.crystallogistics.controller.payload.payload.NewTablePayload;
 import pl.crystalbud.crystallogistics.entity.Table;
 
+import java.security.Principal;
+
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/catalogue/tables")
@@ -20,7 +23,7 @@ public class TablesController {
 
 
     @GetMapping("list")
-    public String getTablesList(Model model, @RequestParam(name = "filter", required = false)String filter) {
+    public String getTablesList(Model model, @RequestParam(name = "filter", required = false) String filter) {
         model.addAttribute("tables", this.tablesRestClient.findAllTables(filter));
         model.addAttribute("filter", filter);
         return "catalogue/tables/list";
