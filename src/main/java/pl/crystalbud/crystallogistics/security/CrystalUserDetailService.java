@@ -7,6 +7,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import pl.crystalbud.crystallogistics.entity.Authority;
 import pl.crystalbud.crystallogistics.repository.CrystalUserRepository;
 
@@ -16,6 +17,7 @@ public class CrystalUserDetailService implements UserDetailsService {
 
     private final CrystalUserRepository crystalUserRepository;
     @Override
+    @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return crystalUserRepository.findByUsername(username)
                 .map(user-> User.builder()
